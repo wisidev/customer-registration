@@ -1,10 +1,158 @@
 object MainForm: TMainForm
-  Left = 270
-  Height = 650
-  Top = 32
-  Width = 1000
+  Left = 24
+  Height = 950
+  Top = 24
+  Width = 852
   Caption = 'Customer Registration'
+  ClientHeight = 950
+  ClientWidth = 852
   DesignTimePPI = 120
   Position = poScreenCenter
   LCLVersion = '4.8.0.0'
+  object grpCustomer: TGroupBox
+    Left = 24
+    Height = 900
+    Top = 24
+    Width = 800
+    Caption = 'Customer Information'
+    ClientHeight = 875
+    ClientWidth = 796
+    Color = clActiveCaption
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 0
+    object lblName: TLabel
+      Left = 16
+      Height = 20
+      Top = 30
+      Width = 43
+      Caption = 'Name:'
+    end
+    object lblDocument: TLabel
+      Left = 16
+      Height = 20
+      Top = 70
+      Width = 65
+      Caption = 'CPF/CNPJ:'
+    end
+    object lblPhone: TLabel
+      Left = 16
+      Height = 20
+      Top = 110
+      Width = 44
+      Caption = 'Phone:'
+    end
+    object lblEmail: TLabel
+      Left = 16
+      Height = 20
+      Top = 190
+      Width = 40
+      Caption = 'Email:'
+    end
+    object lblAddress: TLabel
+      Left = 16
+      Height = 20
+      Top = 150
+      Width = 56
+      Caption = 'Address:'
+    end
+    object edtName: TEdit
+      Left = 88
+      Height = 28
+      Top = 30
+      Width = 574
+      TabOrder = 0
+    end
+    object edtDocument: TEdit
+      Left = 88
+      Height = 28
+      Top = 70
+      Width = 574
+      TabOrder = 1
+    end
+    object edtPhone: TEdit
+      Left = 88
+      Height = 28
+      Top = 110
+      Width = 574
+      TabOrder = 2
+    end
+    object edtAddress: TEdit
+      Left = 88
+      Height = 28
+      Top = 150
+      Width = 574
+      TabOrder = 3
+    end
+    object Edit5: TEdit
+      Left = 88
+      Height = 28
+      Top = 190
+      Width = 574
+      TabOrder = 4
+    end
+    object btnNew: TButton
+      Left = 88
+      Height = 31
+      Top = 260
+      Width = 94
+      Caption = 'New'
+      TabOrder = 5
+    end
+    object btnSave: TButton
+      Left = 208
+      Height = 31
+      Top = 260
+      Width = 94
+      Caption = 'Save'
+      TabOrder = 6
+    end
+    object btnEdit: TButton
+      Left = 328
+      Height = 31
+      Top = 260
+      Width = 94
+      Caption = 'Edit'
+      TabOrder = 7
+    end
+    object btnDelete: TButton
+      Left = 448
+      Height = 31
+      Top = 260
+      Width = 94
+      Caption = 'Delete'
+      TabOrder = 8
+    end
+    object btnCancel: TButton
+      Left = 568
+      Height = 31
+      Top = 260
+      Width = 94
+      Caption = 'Cancel'
+      TabOrder = 9
+    end
+    object lblSearch: TLabel
+      Left = 16
+      Height = 20
+      Top = 330
+      Width = 47
+      Caption = 'Search:'
+    end
+    object edtSearch: TEdit
+      Left = 88
+      Height = 28
+      Top = 330
+      Width = 574
+      TabOrder = 10
+    end
+    object dbgCustomers: TDBGrid
+      Left = 88
+      Height = 368
+      Top = 400
+      Width = 574
+      Color = clWindow
+      Columns = <>
+      TabOrder = 11
+    end
+  end
 end
