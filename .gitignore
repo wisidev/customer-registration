@@ -1,0 +1,17 @@
+# Lazarus backup files
+backup/
+
+# Compiled files
+lib/
+*.o
+*.ppu
+
+# Executables
+*.exe
+
+# Lazarus session files
+*.lps
+
+# Temporary files
+*.bak
+*.tmp
