@@ -1,0 +1,76 @@
+object dmCustomers: TdmCustomers
+  OnCreate = DataModuleCreate
+  OldCreateOrder = False
+  Height = 435
+  HorizontalOffset = 306
+  VerticalOffset = 32
+  Width = 509
+  object bufCustomers: TBufDataset
+    FieldDefs = <>
+    Left = 56
+    Top = 80
+    object bufCustomersID: TLongintField
+      FieldKind = fkData
+      FieldName = 'ID'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object bufCustomersNAME: TStringField
+      FieldKind = fkData
+      FieldName = 'NAME'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 120
+    end
+    object bufCustomersDOCUMENT: TStringField
+      FieldKind = fkData
+      FieldName = 'DOCUMENT'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object bufCustomersPHONE: TStringField
+      FieldKind = fkData
+      FieldName = 'PHONE'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object bufCustomersEMAIL: TStringField
+      FieldKind = fkData
+      FieldName = 'EMAIL'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 150
+    end
+    object bufCustomersADDRESS: TStringField
+      FieldKind = fkData
+      FieldName = 'ADDRESS'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 200
+    end
+  end
+  object dsCustomers: TDataSource
+    DataSet = bufCustomers
+    OnDataChange = dsCustomersDataChange
+    Left = 200
+    Top = 80
+  end
+end

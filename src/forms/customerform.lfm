@@ -84,7 +84,7 @@ object MainForm: TMainForm
       Width = 574
       TabOrder = 3
     end
-    object Edit5: TEdit
+    object edtEmail: TEdit
       Left = 88
       Height = 28
       Top = 190
@@ -151,7 +151,32 @@ object MainForm: TMainForm
       Top = 400
       Width = 574
       Color = clWindow
-      Columns = <>
+      Columns = <      
+        item
+          Title.Caption = 'ID'
+          FieldName = 'ID'
+        end      
+        item
+          Title.Caption = 'NAME'
+          FieldName = 'NAME'
+        end      
+        item
+          Title.Caption = 'DOCUMENT'
+          FieldName = 'DOCUMENT'
+        end      
+        item
+          Title.Caption = 'PHONE'
+          FieldName = 'PHONE'
+        end      
+        item
+          Title.Caption = 'EMAIL'
+          FieldName = 'EMAIL'
+        end      
+        item
+          Title.Caption = 'ADDRESS'
+          FieldName = 'ADDRESS'
+        end>
+      DataSource = dmCustomers.dsCustomers
       TabOrder = 11
     end
   end

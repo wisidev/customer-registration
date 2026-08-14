@@ -10,8 +10,7 @@ uses
   athreads,
   {$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, CustomerForm
-  { you can add units after this };
+  Forms, CustomerForm, CustomerDataModule;
 
 {$R *.res}
 
@@ -23,6 +22,7 @@ begin
   {$POP}
   Application.Initialize;
   Application.CreateForm(TMainForm, MainForm);
+  Application.CreateForm(TdmCustomers, dmCustomers);
   Application.Run;
 end.
 
