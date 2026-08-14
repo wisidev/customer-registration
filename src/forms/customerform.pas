@@ -46,6 +46,7 @@ type
     procedure SetFormState(AIsEditing: Boolean);
     procedure SetCustomerFieldsEnabled(AEnabled: Boolean);
     procedure LoadSelectedCustomer;
+    procedure UpdateActionButtons;
 
     function ValidateCustomerFields: Boolean;
     function GetNextCustomerId: Integer;
@@ -69,6 +70,7 @@ begin
 
   ClearCustomerFields;
   SetFormState(False);
+  UpdateActionButtons;
 end;
 
 procedure TMainForm.btnNewClick(Sender: TObject);
@@ -144,6 +146,7 @@ begin
 
     ClearCustomerFields;
     SetFormState(False);
+    UpdateActionButtons;
 
     if FIsEditingCustomer then
       ShowMessage('Customer updated successfully.')
@@ -167,6 +170,7 @@ begin
 
   ClearCustomerFields;
   SetFormState(False);
+  UpdateActionButtons;
 end;
 
 procedure TMainForm.ClearCustomerFields;
@@ -197,6 +201,16 @@ begin
 
   edtAddress.Text :=
     dmCustomers.bufCustomers.FieldByName('ADDRESS').AsString;
+end;
+
+procedure TMainForm.UpdateActionButtons;
+var
+  HasCustomers: Boolean;
+begin
+  HasCustomers := not dmCustomers.bufCustomers.IsEmpty;
+
+  btnEdit.Enabled := HasCustomers;
+  btnDelete.Enabled := HasCustomers;
 end;
 
 function TMainForm.ValidateCustomerFields: Boolean;
@@ -272,11 +286,16 @@ begin
   SetCustomerFieldsEnabled(AIsEditing);
 
   btnNew.Enabled := not AIsEditing;
-  btnEdit.Enabled := not AIsEditing;
-  btnDelete.Enabled := not AIsEditing;
-
   btnSave.Enabled := AIsEditing;
   btnCancel.Enabled := AIsEditing;
+
+  if AIsEditing then
+  begin
+    btnEdit.Enabled := False;
+    btnDelete.Enabled := False;
+  end
+  else
+    UpdateActionButtons;
 end;
 
 end.
