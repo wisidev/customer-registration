@@ -126,6 +126,7 @@ object MainForm: TMainForm
       Width = 94
       Caption = 'Delete'
       TabOrder = 8
+      OnClick = btnDeleteClick
     end
     object btnCancel: TButton
       Left = 568
