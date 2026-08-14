@@ -23,7 +23,7 @@ type
     edtDocument: TEdit;
     edtPhone: TEdit;
     edtAddress: TEdit;
-    Edit5: TEdit;
+    edtEmail: TEdit;
     lblSearch: TLabel;
     grpCustomer: TGroupBox;
     lblName: TLabel;

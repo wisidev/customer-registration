@@ -26,6 +26,9 @@
     </RunParams>
     <RequiredPackages>
       <Item>
+        <PackageName Value="FCL"/>
+      </Item>
+      <Item>
         <PackageName Value="LCL"/>
       </Item>
     </RequiredPackages>
@@ -42,6 +45,13 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="CustomerForm"/>
       </Unit>
+      <Unit>
+        <Filename Value="src\datamodules\customerdatamodule.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="dmCustomers"/>
+        <ResourceBaseClass Value="DataModule"/>
+        <UnitName Value="CustomerDataModule"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -52,7 +62,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="src\forms"/>
+      <OtherUnitFiles Value="src\forms;src\datamodules"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Linking>
