@@ -34,6 +34,7 @@ type
     lblAddress: TLabel;
 
     procedure btnCancelClick(Sender: TObject);
+    procedure btnDeleteClick(Sender: TObject);
     procedure btnEditClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure btnSaveClick(Sender: TObject);
@@ -97,6 +98,37 @@ begin
   SetFormState(True);
 
   edtName.SetFocus;
+end;
+
+procedure TMainForm.btnDeleteClick(Sender: TObject);
+var
+  CustomerName: String;
+begin
+  if dmCustomers.bufCustomers.IsEmpty then
+  begin
+    ShowMessage('There is no customer to delete.');
+    Exit;
+  end;
+
+  CustomerName :=
+    dmCustomers.bufCustomers.FieldByName('NAME').AsString;
+
+  if MessageDlg(
+    'Delete customer',
+    'Are you sure you want to delete "' + CustomerName + '"?',
+    mtConfirmation,
+    [mbYes, mbNo],
+    0
+  ) <> mrYes then
+    Exit;
+
+  dmCustomers.bufCustomers.Delete;
+
+  ClearCustomerFields;
+  SetFormState(False);
+  UpdateActionButtons;
+
+  ShowMessage('Customer deleted successfully.');
 end;
 
 procedure TMainForm.btnSaveClick(Sender: TObject);
@@ -207,7 +239,11 @@ procedure TMainForm.UpdateActionButtons;
 var
   HasCustomers: Boolean;
 begin
-  HasCustomers := not dmCustomers.bufCustomers.IsEmpty;
+  HasCustomers :=
+    Assigned(dmCustomers) and
+    Assigned(dmCustomers.bufCustomers) and
+    dmCustomers.bufCustomers.Active and
+    (not dmCustomers.bufCustomers.IsEmpty);
 
   btnEdit.Enabled := HasCustomers;
   btnDelete.Enabled := HasCustomers;
