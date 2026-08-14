@@ -7,6 +7,9 @@ object dmCustomers: TdmCustomers
   Width = 509
   object bufCustomers: TBufDataset
     FieldDefs = <>
+    AfterDelete = bufCustomersAfterDelete
+    AfterPost = bufCustomersAfterPost
+    BeforePost = bufCustomersBeforePost
     Left = 56
     Top = 80
     object bufCustomersID: TLongintField
