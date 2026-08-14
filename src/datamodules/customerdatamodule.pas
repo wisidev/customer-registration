@@ -20,8 +20,9 @@ type
     bufCustomersNAME: TStringField;
     bufCustomersPHONE: TStringField;
     dsCustomers: TDataSource;
+
     procedure DataModuleCreate(Sender: TObject);
-    procedure dsCustomersDataChange(Sender: TObject; Field: TField);
+
   private
 
   public
@@ -39,13 +40,8 @@ implementation
 
 procedure TdmCustomers.DataModuleCreate(Sender: TObject);
 begin
-  bufCustomers.CreateDataset;
-end;
-
-procedure TdmCustomers.dsCustomersDataChange(Sender: TObject; Field: TField);
-begin
-
+  if not bufCustomers.Active then
+    bufCustomers.CreateDataset;
 end;
 
 end.
-
