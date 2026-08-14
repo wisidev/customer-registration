@@ -49,6 +49,7 @@ type
     procedure SetCustomerFieldsEnabled(AEnabled: Boolean);
     procedure LoadSelectedCustomer;
     procedure UpdateActionButtons;
+    procedure CustomerDataChanged(Sender: TObject);
 
     function ValidateCustomerFields: Boolean;
     function GetNextCustomerId: Integer;
@@ -70,6 +71,9 @@ procedure TMainForm.FormCreate(Sender: TObject);
 begin
   FIsEditingCustomer := False;
 
+  dmCustomers.OnCustomerDataChanged :=
+    @CustomerDataChanged;
+
   ClearCustomerFields;
   SetFormState(False);
   UpdateActionButtons;
@@ -89,7 +93,9 @@ procedure TMainForm.btnEditClick(Sender: TObject);
 begin
   if dmCustomers.bufCustomers.IsEmpty then
   begin
-    ShowMessage('There is no customer to edit.');
+    ShowMessage(
+      'There is no customer to edit.'
+    );
     Exit;
   end;
 
@@ -107,16 +113,21 @@ var
 begin
   if dmCustomers.bufCustomers.IsEmpty then
   begin
-    ShowMessage('There is no customer to delete.');
+    ShowMessage(
+      'There is no customer to delete.'
+    );
     Exit;
   end;
 
   CustomerName :=
-    dmCustomers.bufCustomers.FieldByName('NAME').AsString;
+    dmCustomers.bufCustomers
+      .FieldByName('NAME')
+      .AsString;
 
   if MessageDlg(
     'Delete customer',
-    'Are you sure you want to delete "' + CustomerName + '"?',
+    'Are you sure you want to delete "' +
+      CustomerName + '"?',
     mtConfirmation,
     [mbYes, mbNo],
     0
@@ -127,9 +138,10 @@ begin
 
   ClearCustomerFields;
   SetFormState(False);
-  UpdateActionButtons;
 
-  ShowMessage('Customer deleted successfully.');
+  ShowMessage(
+    'Customer deleted successfully.'
+  );
 end;
 
 procedure TMainForm.btnSaveClick(Sender: TObject);
@@ -157,34 +169,42 @@ begin
   try
     dmCustomers.bufCustomers
       .FieldByName('NAME')
-      .AsString := Trim(edtName.Text);
+      .AsString :=
+        Trim(edtName.Text);
 
     dmCustomers.bufCustomers
       .FieldByName('DOCUMENT')
-      .AsString := Trim(edtDocument.Text);
+      .AsString :=
+        Trim(edtDocument.Text);
 
     dmCustomers.bufCustomers
       .FieldByName('PHONE')
-      .AsString := Trim(edtPhone.Text);
+      .AsString :=
+        Trim(edtPhone.Text);
 
     dmCustomers.bufCustomers
       .FieldByName('EMAIL')
-      .AsString := Trim(edtEmail.Text);
+      .AsString :=
+        Trim(edtEmail.Text);
 
     dmCustomers.bufCustomers
       .FieldByName('ADDRESS')
-      .AsString := Trim(edtAddress.Text);
+      .AsString :=
+        Trim(edtAddress.Text);
 
     dmCustomers.bufCustomers.Post;
 
     ClearCustomerFields;
     SetFormState(False);
-    UpdateActionButtons;
 
     if FIsEditingCustomer then
-      ShowMessage('Customer updated successfully.')
+      ShowMessage(
+        'Customer updated successfully.'
+      )
     else
-      ShowMessage('Customer registered successfully.');
+      ShowMessage(
+        'Customer registered successfully.'
+      );
 
     FIsEditingCustomer := False;
 
@@ -196,20 +216,29 @@ end;
 
 procedure TMainForm.btnCancelClick(Sender: TObject);
 begin
-  if dmCustomers.bufCustomers.State in [dsEdit, dsInsert] then
+  if dmCustomers.bufCustomers.State
+    in [dsEdit, dsInsert] then
+  begin
     dmCustomers.bufCustomers.Cancel;
+  end;
 
   FIsEditingCustomer := False;
 
   ClearCustomerFields;
   SetFormState(False);
-  UpdateActionButtons;
 end;
 
 procedure TMainForm.edtSearchChange(Sender: TObject);
 begin
-  dmCustomers.ApplyFilter(edtSearch.Text);
+  dmCustomers.ApplyFilter(
+    edtSearch.Text
+  );
 
+  UpdateActionButtons;
+end;
+
+procedure TMainForm.CustomerDataChanged(Sender: TObject);
+begin
   UpdateActionButtons;
 end;
 
@@ -228,19 +257,29 @@ begin
     Exit;
 
   edtName.Text :=
-    dmCustomers.bufCustomers.FieldByName('NAME').AsString;
+    dmCustomers.bufCustomers
+      .FieldByName('NAME')
+      .AsString;
 
   edtDocument.Text :=
-    dmCustomers.bufCustomers.FieldByName('DOCUMENT').AsString;
+    dmCustomers.bufCustomers
+      .FieldByName('DOCUMENT')
+      .AsString;
 
   edtPhone.Text :=
-    dmCustomers.bufCustomers.FieldByName('PHONE').AsString;
+    dmCustomers.bufCustomers
+      .FieldByName('PHONE')
+      .AsString;
 
   edtEmail.Text :=
-    dmCustomers.bufCustomers.FieldByName('EMAIL').AsString;
+    dmCustomers.bufCustomers
+      .FieldByName('EMAIL')
+      .AsString;
 
   edtAddress.Text :=
-    dmCustomers.bufCustomers.FieldByName('ADDRESS').AsString;
+    dmCustomers.bufCustomers
+      .FieldByName('ADDRESS')
+      .AsString;
 end;
 
 procedure TMainForm.UpdateActionButtons;
@@ -316,7 +355,9 @@ begin
   end;
 end;
 
-procedure TMainForm.SetCustomerFieldsEnabled(AEnabled: Boolean);
+procedure TMainForm.SetCustomerFieldsEnabled(
+  AEnabled: Boolean
+);
 begin
   edtName.Enabled := AEnabled;
   edtDocument.Enabled := AEnabled;
@@ -325,9 +366,13 @@ begin
   edtAddress.Enabled := AEnabled;
 end;
 
-procedure TMainForm.SetFormState(AIsEditing: Boolean);
+procedure TMainForm.SetFormState(
+  AIsEditing: Boolean
+);
 begin
-  SetCustomerFieldsEnabled(AIsEditing);
+  SetCustomerFieldsEnabled(
+    AIsEditing
+  );
 
   btnNew.Enabled := not AIsEditing;
   btnSave.Enabled := AIsEditing;
