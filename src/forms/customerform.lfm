@@ -117,6 +117,7 @@ object MainForm: TMainForm
       Width = 94
       Caption = 'Edit'
       TabOrder = 7
+      OnClick = btnEditClick
     end
     object btnDelete: TButton
       Left = 448
