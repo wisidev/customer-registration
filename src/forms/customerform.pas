@@ -36,9 +36,12 @@ type
     procedure btnCancelClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure btnSaveClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
 
   private
     procedure ClearCustomerFields;
+    procedure SetFormState(AIsEditing: Boolean);
+    procedure SetCustomerFieldsEnabled(AEnabled: Boolean);
     function ValidateCustomerFields: Boolean;
     function GetNextCustomerId: Integer;
 
@@ -58,12 +61,14 @@ implementation
 procedure TMainForm.btnNewClick(Sender: TObject);
 begin
   ClearCustomerFields;
+  SetFormState(True);
   edtName.SetFocus;
 end;
 
 procedure TMainForm.btnCancelClick(Sender: TObject);
 begin
   ClearCustomerFields;
+  SetFormState(False);
 end;
 
 procedure TMainForm.btnSaveClick(Sender: TObject);
@@ -99,12 +104,19 @@ begin
     dmCustomers.bufCustomers.Post;
 
     ClearCustomerFields;
+    SetFormState(False);
 
     ShowMessage('Customer registered successfully.');
   except
     dmCustomers.bufCustomers.Cancel;
     raise;
   end;
+end;
+
+procedure TMainForm.FormCreate(Sender: TObject);
+begin
+  ClearCustomerFields;
+  SetFormState(False);
 end;
 
 procedure TMainForm.ClearCustomerFields;
@@ -168,6 +180,27 @@ begin
     Result :=
       dmCustomers.bufCustomers.FieldByName('ID').AsInteger + 1;
   end;
+end;
+
+procedure TMainForm.SetCustomerFieldsEnabled(AEnabled: Boolean);
+begin
+  edtName.Enabled := AEnabled;
+  edtDocument.Enabled := AEnabled;
+  edtPhone.Enabled := AEnabled;
+  edtEmail.Enabled := AEnabled;
+  edtAddress.Enabled := AEnabled;
+end;
+
+procedure TMainForm.SetFormState(AIsEditing: Boolean);
+begin
+  SetCustomerFieldsEnabled(AIsEditing);
+
+  btnNew.Enabled := not AIsEditing;
+  btnEdit.Enabled := not AIsEditing;
+  btnDelete.Enabled := not AIsEditing;
+
+  btnSave.Enabled := AIsEditing;
+  btnCancel.Enabled := AIsEditing;
 end;
 
 end.

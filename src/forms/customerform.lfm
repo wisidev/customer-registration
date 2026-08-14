@@ -9,6 +9,7 @@ object MainForm: TMainForm
   DesignTimePPI = 120
   Position = poScreenCenter
   LCLVersion = '4.8.0.0'
+  OnCreate = FormCreate
   object grpCustomer: TGroupBox
     Left = 24
     Height = 900
