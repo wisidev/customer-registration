@@ -50,9 +50,11 @@ type
     procedure LoadSelectedCustomer;
     procedure UpdateActionButtons;
     procedure CustomerDataChanged(Sender: TObject);
+    procedure AssignFormValuesToDataset;
 
     function ValidateCustomerFields: Boolean;
     function GetNextCustomerId: Integer;
+    function HasCustomers: Boolean;
 
   public
 
@@ -76,7 +78,6 @@ begin
 
   ClearCustomerFields;
   SetFormState(False);
-  UpdateActionButtons;
 end;
 
 procedure TMainForm.btnNewClick(Sender: TObject);
@@ -91,7 +92,7 @@ end;
 
 procedure TMainForm.btnEditClick(Sender: TObject);
 begin
-  if dmCustomers.bufCustomers.IsEmpty then
+  if not HasCustomers then
   begin
     ShowMessage(
       'There is no customer to edit.'
@@ -111,7 +112,7 @@ procedure TMainForm.btnDeleteClick(Sender: TObject);
 var
   CustomerName: String;
 begin
-  if dmCustomers.bufCustomers.IsEmpty then
+  if not HasCustomers then
   begin
     ShowMessage(
       'There is no customer to delete.'
@@ -167,30 +168,7 @@ begin
   end;
 
   try
-    dmCustomers.bufCustomers
-      .FieldByName('NAME')
-      .AsString :=
-        Trim(edtName.Text);
-
-    dmCustomers.bufCustomers
-      .FieldByName('DOCUMENT')
-      .AsString :=
-        Trim(edtDocument.Text);
-
-    dmCustomers.bufCustomers
-      .FieldByName('PHONE')
-      .AsString :=
-        Trim(edtPhone.Text);
-
-    dmCustomers.bufCustomers
-      .FieldByName('EMAIL')
-      .AsString :=
-        Trim(edtEmail.Text);
-
-    dmCustomers.bufCustomers
-      .FieldByName('ADDRESS')
-      .AsString :=
-        Trim(edtAddress.Text);
+    AssignFormValuesToDataset;
 
     dmCustomers.bufCustomers.Post;
 
@@ -251,9 +229,37 @@ begin
   edtAddress.Clear;
 end;
 
+procedure TMainForm.AssignFormValuesToDataset;
+begin
+  dmCustomers.bufCustomers
+    .FieldByName('NAME')
+    .AsString :=
+      Trim(edtName.Text);
+
+  dmCustomers.bufCustomers
+    .FieldByName('DOCUMENT')
+    .AsString :=
+      Trim(edtDocument.Text);
+
+  dmCustomers.bufCustomers
+    .FieldByName('PHONE')
+    .AsString :=
+      Trim(edtPhone.Text);
+
+  dmCustomers.bufCustomers
+    .FieldByName('EMAIL')
+    .AsString :=
+      Trim(edtEmail.Text);
+
+  dmCustomers.bufCustomers
+    .FieldByName('ADDRESS')
+    .AsString :=
+      Trim(edtAddress.Text);
+end;
+
 procedure TMainForm.LoadSelectedCustomer;
 begin
-  if dmCustomers.bufCustomers.IsEmpty then
+  if not HasCustomers then
     Exit;
 
   edtName.Text :=
@@ -283,17 +289,18 @@ begin
 end;
 
 procedure TMainForm.UpdateActionButtons;
-var
-  HasCustomers: Boolean;
 begin
-  HasCustomers :=
+  btnEdit.Enabled := HasCustomers;
+  btnDelete.Enabled := HasCustomers;
+end;
+
+function TMainForm.HasCustomers: Boolean;
+begin
+  Result :=
     Assigned(dmCustomers) and
     Assigned(dmCustomers.bufCustomers) and
     dmCustomers.bufCustomers.Active and
     (not dmCustomers.bufCustomers.IsEmpty);
-
-  btnEdit.Enabled := HasCustomers;
-  btnDelete.Enabled := HasCustomers;
 end;
 
 function TMainForm.ValidateCustomerFields: Boolean;
@@ -339,19 +346,40 @@ begin
 end;
 
 function TMainForm.GetNextCustomerId: Integer;
+var
+  CurrentId: Integer;
+  MaxId: Integer;
 begin
-  if dmCustomers.bufCustomers.IsEmpty then
+  MaxId := 0;
+
+  if not HasCustomers then
   begin
     Result := 1;
-  end
-  else
-  begin
-    dmCustomers.bufCustomers.Last;
+    Exit;
+  end;
 
-    Result :=
-      dmCustomers.bufCustomers
-        .FieldByName('ID')
-        .AsInteger + 1;
+  dmCustomers.bufCustomers.DisableControls;
+
+  try
+    dmCustomers.bufCustomers.First;
+
+    while not dmCustomers.bufCustomers.EOF do
+    begin
+      CurrentId :=
+        dmCustomers.bufCustomers
+          .FieldByName('ID')
+          .AsInteger;
+
+      if CurrentId > MaxId then
+        MaxId := CurrentId;
+
+      dmCustomers.bufCustomers.Next;
+    end;
+
+    Result := MaxId + 1;
+
+  finally
+    dmCustomers.bufCustomers.EnableControls;
   end;
 end;
 
