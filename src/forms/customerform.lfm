@@ -9,6 +9,7 @@ object MainForm: TMainForm
   DesignTimePPI = 120
   Position = poScreenCenter
   LCLVersion = '4.8.0.0'
+  OnCreate = FormCreate
   object grpCustomer: TGroupBox
     Left = 24
     Height = 900
@@ -98,6 +99,7 @@ object MainForm: TMainForm
       Width = 94
       Caption = 'New'
       TabOrder = 5
+      OnClick = btnNewClick
     end
     object btnSave: TButton
       Left = 208
@@ -106,6 +108,7 @@ object MainForm: TMainForm
       Width = 94
       Caption = 'Save'
       TabOrder = 6
+      OnClick = btnSaveClick
     end
     object btnEdit: TButton
       Left = 328
@@ -130,6 +133,7 @@ object MainForm: TMainForm
       Width = 94
       Caption = 'Cancel'
       TabOrder = 9
+      OnClick = btnCancelClick
     end
     object lblSearch: TLabel
       Left = 16
