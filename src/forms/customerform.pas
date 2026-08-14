@@ -38,6 +38,7 @@ type
     procedure btnEditClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure btnSaveClick(Sender: TObject);
+    procedure edtSearchChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
 
   private
@@ -202,6 +203,13 @@ begin
 
   ClearCustomerFields;
   SetFormState(False);
+  UpdateActionButtons;
+end;
+
+procedure TMainForm.edtSearchChange(Sender: TObject);
+begin
+  dmCustomers.ApplyFilter(edtSearch.Text);
+
   UpdateActionButtons;
 end;
 

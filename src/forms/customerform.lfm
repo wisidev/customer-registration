@@ -150,6 +150,7 @@ object MainForm: TMainForm
       Top = 330
       Width = 574
       TabOrder = 10
+      OnChange = edtSearchChange
     end
     object dbgCustomers: TDBGrid
       Left = 88
